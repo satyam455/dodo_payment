@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_USER: invoices
+      POSTGRES_PASSWORD: invoices
+      POSTGRES_DB: invoices
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U invoices"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  mock-psp:
+    build: .
+    command: ["mock-psp"]
+    environment:
+      DATABASE_URL: postgres://invoices:invoices@db/invoices
+      LISTEN_ADDR: 0.0.0.0:8081
+      DEMO_WEBHOOK_SECRET: local-webhook-secret-change-me
+    depends_on:
+      db:
+        condition: service_healthy
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: postgres://invoices:invoices@db/invoices
+      PSP_URL: http://mock-psp:8081
+      BOOTSTRAP_API_KEY: local-business-key-change-me
+      LISTEN_ADDR: 0.0.0.0:8080
+      RUST_LOG: invoice_service=info
+    depends_on:
+      db:
+        condition: service_healthy
+      mock-psp:
+        condition: service_started
+volumes:
+  postgres-data:
