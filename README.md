@@ -125,7 +125,7 @@ The assignment says grading is split evenly across design judgment, core correct
 
 ## Demo Video
 
-**Pending: add your accessible 5-10 minute recording link before submission.**
+[Watch the demo video](https://www.dropbox.com/scl/fi/1jr30fvouqh42l0nild3k/dodo_payment.mp4?rlkey=arep7r2zy1lic306uxqageiqc&st=kje9nanc&dl=0)
 
 The assignment requires your own unscripted explanations. Record these in order:
 
@@ -133,5 +133,3 @@ The assignment requires your own unscripted explanations. Record these in order:
 2. Start Compose, create a customer and invoice, demonstrate successful and declined payments on separate invoices, and show webhook logs (2-3 minutes).
 3. Explain the state diagram and your reasoning in your own words (1-2 minutes).
 4. Explain one failure mode while showing its implementation; `payment_once` in `src/jobs.rs` handles timeout and lost-response recovery (1-2 minutes).
-
-The code and documentation are AI-assisted. The video and three genuine independent decisions in AI_USAGE.md still need your contribution; the repository should not be submitted as complete until those are supplied.
